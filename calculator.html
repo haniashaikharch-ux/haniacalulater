@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hania's Scientific Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+/* ==========================================================================
+   Hania's Scientific Calculator - Standalone Bundle
+   ========================================================================== */
+:root {
+  --page-bg: #f3f5f9;
+  --page-radial: radial-gradient(circle at 50% 30%, #ffffff 0%, #e8edf5 100%);
+  --grid-line-color: rgba(0, 0, 0, 0.04);
+
+  --calc-body-bg: linear-gradient(165deg, #18191f 0%, #101115 50%, #0a0b0d 100%);
+  --calc-border: #282a36;
+  --calc-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4), 0 10px 25px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --calc-accent: #0284c7;
+
+  --display-bg: #ffffff;
+  --display-border: #d1d5db;
+  --display-text-main: #0f172a;
+  --display-text-muted: #64748b;
+  --display-text-preview: #0284c7;
+  --display-inner-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  --btn-num-bg: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+  --btn-num-border: #3b82f6;
+  --btn-num-shadow: 0 4px 10px rgba(30, 64, 175, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  --btn-num-hover: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+
+  --btn-sc-bg: linear-gradient(180deg, #0369a1 0%, #075985 100%);
+  --btn-sc-border: #0284c7;
+  --btn-sc-shadow: 0 4px 10px rgba(3, 105, 161, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  --btn-sc-hover: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+
+  --btn-op-bg: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  --btn-op-border: #60a5fa;
+  --btn-op-shadow: 0 4px 12px rgba(37, 99, 235, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  --btn-op-hover: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+
+  --btn-eq-bg: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #1d4ed8 100%);
+  --btn-eq-border: #38bdf8;
+  --btn-eq-shadow: 0 6px 18px rgba(37, 99, 235, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  --btn-eq-hover: linear-gradient(135deg, #38bdf8 0%, #0284c7 50%, #2563eb 100%);
+
+  --btn-memory-bg: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  --btn-memory-border: #334155;
+  --btn-memory-text: #93c5fd;
+
+  --btn-danger-bg: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+  --btn-danger-border: #f87171;
+  --btn-danger-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+
+  --btn-warning-bg: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  --btn-warning-border: #fbbf24;
+  --btn-warning-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+
+  --text-primary: #ffffff;
+  --text-sub: rgba(255, 255, 255, 0.7);
+  --badge-bg: #e2e8f0;
+  --badge-text: #0f172a;
+  --badge-active-bg: #0284c7;
+  --badge-active-text: #ffffff;
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-brand: 'Orbitron', monospace;
+
+  --transition-speed: 0.25s;
+}
+
+body.theme-night-vision {
+  --page-bg: #030805;
+  --page-radial: radial-gradient(circle at 50% 40%, #06190e 0%, #020704 100%);
+  --grid-line-color: rgba(0, 255, 102, 0.05);
+
+  --calc-body-bg: linear-gradient(165deg, #0a130e 0%, #050a07 60%, #020503 100%);
+  --calc-border: #00ff66;
+  --calc-shadow: 0 0 50px rgba(0, 255, 102, 0.22), 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 255, 102, 0.15);
+  --calc-accent: #00ff66;
+
+  --display-bg: #021408;
+  --display-border: #00ff66;
+  --display-text-main: #00ff66;
+  --display-text-muted: #10b981;
+  --display-text-preview: #34d399;
+  --display-inner-shadow: inset 0 0 20px rgba(0, 255, 102, 0.25), 0 0 10px rgba(0, 255, 102, 0.3);
+
+  --btn-num-bg: linear-gradient(180deg, #062b3a 0%, #031c26 100%);
+  --btn-num-border: #00e5ff;
+  --btn-num-shadow: 0 0 12px rgba(0, 229, 255, 0.35), inset 0 1px 1px rgba(0, 229, 255, 0.4);
+  --btn-num-hover: linear-gradient(180deg, #08435b 0%, #062b3a 100%);
+
+  --btn-sc-bg: linear-gradient(180deg, #063428 0%, #032018 100%);
+  --btn-sc-border: #00ff88;
+  --btn-sc-shadow: 0 0 12px rgba(0, 255, 136, 0.35), inset 0 1px 1px rgba(0, 255, 136, 0.4);
+  --btn-sc-hover: linear-gradient(180deg, #0b4f3e 0%, #063428 100%);
+
+  --btn-op-bg: linear-gradient(180deg, #044b70 0%, #03324d 100%);
+  --btn-op-border: #38bdf8;
+  --btn-op-shadow: 0 0 15px rgba(56, 189, 248, 0.45), inset 0 1px 1px rgba(56, 189, 248, 0.5);
+  --btn-op-hover: linear-gradient(180deg, #066699 0%, #044b70 100%);
+
+  --btn-eq-bg: linear-gradient(135deg, #00ff66 0%, #00b4d8 100%);
+  --btn-eq-border: #00ff66;
+  --btn-eq-shadow: 0 0 25px rgba(0, 255, 102, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  --btn-eq-hover: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+
+  --btn-memory-bg: linear-gradient(180deg, #051a11 0%, #030e09 100%);
+  --btn-memory-border: #059669;
+  --btn-memory-text: #6ee7b7;
+
+  --btn-danger-bg: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
+  --btn-danger-border: #ef4444;
+  --btn-danger-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+
+  --btn-warning-bg: linear-gradient(180deg, #78350f 0%, #451a03 100%);
+  --btn-warning-border: #f59e0b;
+  --btn-warning-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+
+  --text-primary: #e0f2fe;
+  --text-sub: #7dd3fc;
+  --badge-bg: #032512;
+  --badge-text: #00ff66;
+  --badge-active-bg: #00ff66;
+  --badge-active-text: #021408;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--page-bg);
+  background-image: var(--page-radial);
+  font-family: var(--font-sans);
+  color: #1e293b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color var(--transition-speed) ease, background-image var(--transition-speed) ease;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.night-vision-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: 
+    radial-gradient(circle at center, transparent 40%, rgba(0, 20, 6, 0.7) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 3px);
+}
+body.theme-night-vision .night-vision-overlay { opacity: 1; }
+
+.nv-reticle {
+  position: fixed;
+  inset: 12px;
+  border: 1px dashed rgba(0, 255, 102, 0.2);
+  pointer-events: none;
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+body.theme-night-vision .nv-reticle { opacity: 1; }
+.nv-reticle::before, .nv-reticle::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: #00ff66;
+  border-style: solid;
+}
+.nv-reticle::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+.nv-reticle::after { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+.app-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.calculator-chassis {
+  background: var(--calc-body-bg);
+  border: 2px solid var(--calc-border);
+  box-shadow: var(--calc-shadow);
+  border-radius: 28px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  transition: all var(--transition-speed) ease;
+  user-select: none;
+}
+.calculator-chassis::before, .calculator-chassis::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2a2c35;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.15);
+}
+.calculator-chassis::before { top: 14px; left: 14px; }
+.calculator-chassis::after { top: 14px; right: 14px; }
+
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.brand-badge { display: flex; align-items: center; gap: 10px; }
+.status-indicator {
+  width: 10px; height: 10px; border-radius: 50%;
+  background-color: var(--calc-accent);
+  box-shadow: 0 0 10px var(--calc-accent);
+  animation: pulse 2.5s infinite ease-in-out;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+.brand-text { display: flex; flex-direction: column; }
+.brand-title {
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+body.theme-night-vision .brand-title { color: #00ff66; text-shadow: 0 0 8px rgba(0, 255, 102, 0.6); }
+.brand-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+body.theme-night-vision .brand-subtitle { color: #34d399; }
+
+.header-controls { display: flex; align-items: center; gap: 8px; }
+.control-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.control-pill:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.control-pill:active { transform: translateY(0); }
+
+.nv-btn {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(37, 99, 235, 0.3));
+  border-color: #0284c7;
+  color: #e0f2fe;
+}
+.nv-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #64748b; display: inline-block; transition: all 0.3s ease;
+}
+body.theme-night-vision .nv-btn {
+  background: linear-gradient(135deg, rgba(0, 255, 102, 0.2), rgba(16, 185, 129, 0.3));
+  border-color: #00ff66; color: #00ff66; box-shadow: 0 0 12px rgba(0, 255, 102, 0.35);
+}
+body.theme-night-vision .nv-status-dot { background: #00ff66; box-shadow: 0 0 6px #00ff66; }
+
+.sound-btn, .history-btn { padding: 6px 10px; border-radius: 12px; }
+
+.display-container {
+  background: var(--display-bg);
+  border: 2px solid var(--display-border);
+  box-shadow: var(--display-inner-shadow);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  min-height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+}
+.display-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 35%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+body.theme-night-vision .display-container::before {
+  background: linear-gradient(180deg, rgba(0, 255, 102, 0.08) 0%, transparent 100%);
+}
+
+.display-status-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
+}
+.status-tags { display: flex; gap: 6px; }
+.badge {
+  padding: 2px 6px; border-radius: 4px;
+  background: var(--badge-active-bg); color: var(--badge-active-text);
+  font-size: 0.62rem; letter-spacing: 0.5px; transition: all 0.2s ease;
+}
+.badge-inactive { background: var(--badge-bg); color: var(--badge-text); opacity: 0.45; }
+.nv-hud-tag { font-family: var(--font-brand); font-size: 0.65rem; color: var(--display-text-muted); }
+body.theme-night-vision .nv-hud-tag { color: #00ff66; text-shadow: 0 0 6px #00ff66; }
+
+.display-expression {
+  min-height: 20px; font-family: var(--font-mono); font-size: 0.88rem;
+  color: var(--display-text-muted); text-align: right; overflow-x: auto;
+  white-space: nowrap; scrollbar-width: none; margin-top: 4px;
+}
+.display-expression::-webkit-scrollbar { display: none; }
+
+.display-main { width: 100%; margin: 4px 0; }
+.display-input {
+  width: 100%; background: transparent; border: none; outline: none;
+  font-family: var(--font-mono); font-size: 2.15rem; font-weight: 700;
+  color: var(--display-text-main); text-align: right; letter-spacing: -0.5px;
+  cursor: default; transition: color var(--transition-speed) ease;
+}
+body.theme-night-vision .display-input { text-shadow: 0 0 10px rgba(0, 255, 102, 0.65); }
+
+.display-preview {
+  min-height: 18px; font-family: var(--font-mono); font-size: 0.85rem;
+  font-weight: 500; color: var(--display-text-preview); text-align: right; opacity: 0.85;
+}
+
+.keypad-container { display: flex; flex-direction: column; gap: 10px; }
+.ribbon-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.keypad-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+
+.key {
+  position: relative; height: 52px; border-radius: 12px; border: 1px solid transparent;
+  color: var(--text-primary); font-family: var(--font-sans); font-size: 1.05rem;
+  font-weight: 600; cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+  transition: all 0.12s ease; outline: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.key:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.key:active { transform: translateY(1px) scale(0.98); filter: brightness(0.95); }
+
+.sub-label { font-size: 0.6rem; font-weight: 500; color: var(--text-sub); letter-spacing: 0.3px; line-height: 1; }
+
+.key-num {
+  background: var(--btn-num-bg); border-color: var(--btn-num-border);
+  box-shadow: var(--btn-num-shadow); font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono);
+}
+.key-num:hover { background: var(--btn-num-hover); }
+
+.key-sc {
+  background: var(--btn-sc-bg); border-color: var(--btn-sc-border);
+  box-shadow: var(--btn-sc-shadow); font-size: 0.95rem;
+}
+.key-sc:hover { background: var(--btn-sc-hover); }
+
+.key-op {
+  background: var(--btn-op-bg); border-color: var(--btn-op-border);
+  box-shadow: var(--btn-op-shadow); font-size: 1.25rem; font-weight: 700;
+}
+.key-op:hover { background: var(--btn-op-hover); }
+
+.key-equals {
+  grid-column: span 2;
+  background: var(--btn-eq-bg); border-color: var(--btn-eq-border);
+  box-shadow: var(--btn-eq-shadow); font-size: 1.5rem; font-weight: 800;
+}
+.key-equals:hover { background: var(--btn-eq-hover); }
+
+.key-fn, .key-memory {
+  height: 42px; background: var(--btn-memory-bg); border-color: var(--btn-memory-border);
+  color: var(--btn-memory-text); font-size: 0.8rem; font-weight: 700; border-radius: 10px;
+}
+.key-fn.active { background: var(--calc-accent); color: #ffffff; border-color: #ffffff; }
+body.theme-night-vision .key-fn.active { background: #00ff66; color: #021408; border-color: #00ff66; box-shadow: 0 0 10px #00ff66; }
+
+.key-danger {
+  background: var(--btn-danger-bg); border-color: var(--btn-danger-border);
+  box-shadow: var(--btn-danger-shadow); font-size: 1rem; font-weight: 800;
+}
+.key-warning {
+  background: var(--btn-warning-bg); border-color: var(--btn-warning-border);
+  box-shadow: var(--btn-warning-shadow); font-size: 1.1rem;
+}
+.key-const, .key-action {
+  background: var(--btn-sc-bg); border-color: var(--btn-sc-border);
+  box-shadow: var(--btn-sc-shadow); font-size: 1.05rem; font-family: var(--font-mono);
+}
+
+.calc-footer {
+  margin-top: 18px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem; font-family: var(--font-brand); letter-spacing: 1px; color: #64748b;
+}
+body.theme-night-vision .calc-footer { color: #059669; }
+
+.mini-btn {
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1; border-radius: 6px; padding: 3px 8px; font-size: 0.68rem;
+  font-family: var(--font-sans); font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+.mini-btn:hover { background: rgba(255, 255, 255, 0.14); color: #ffffff; }
+body.theme-night-vision .mini-btn { border-color: #00ff66; color: #00ff66; }
+
+.history-drawer {
+  width: 320px; background: #111217; border: 1px solid #282a36;
+  border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  padding: 20px; display: flex; flex-direction: column; max-height: 640px; height: 640px;
+  transition: all var(--transition-speed) ease;
+}
+@media (max-width: 860px) {
+  .history-drawer {
+    display: none; position: fixed; right: 16px; top: 16px; bottom: 16px;
+    z-index: 1000; width: min(340px, calc(100vw - 32px)); height: auto;
+  }
+  .history-drawer.active { display: flex; }
+}
+body.theme-night-vision .history-drawer {
+  background: #040c07; border-color: #00ff66; box-shadow: 0 0 30px rgba(0, 255, 102, 0.2);
+}
+
+.history-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff;
+}
+.history-header h3 { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.5px; }
+body.theme-night-vision .history-header h3 { color: #00ff66; }
+.close-btn {
+  background: transparent; border: none; color: #94a3b8; font-size: 1.1rem;
+  cursor: pointer; padding: 4px 8px; border-radius: 6px;
+}
+.close-btn:hover { color: #ffffff; }
+
+.history-list {
+  flex: 1; overflow-y: auto; margin: 14px 0; display: flex; flex-direction: column; gap: 10px;
+  scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.history-item {
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px; padding: 10px 12px; cursor: pointer; transition: all 0.2s ease; text-align: right;
+}
+.history-item:hover { background: rgba(2, 132, 199, 0.15); border-color: #0284c7; transform: translateX(-2px); }
+body.theme-night-vision .history-item { background: rgba(0, 255, 102, 0.05); border-color: rgba(0, 255, 102, 0.2); }
+body.theme-night-vision .history-item:hover { background: rgba(0, 255, 102, 0.15); border-color: #00ff66; }
+.history-expr { font-family: var(--font-mono); font-size: 0.75rem; color: #94a3b8; margin-bottom: 2px; word-break: break-all; }
+.history-result { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #38bdf8; }
+body.theme-night-vision .history-result { color: #00ff66; }
+.empty-history { color: #64748b; font-size: 0.85rem; text-align: center; margin-top: 40px; font-style: italic; }
+.history-footer { padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.clear-history-btn {
+  width: 100%; background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.35);
+  color: #fca5a5; border-radius: 10px; padding: 8px; font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.clear-history-btn:hover { background: rgba(220, 38, 38, 0.3); color: #ffffff; }
+
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0f172a; border: 1px solid #38bdf8; color: #ffffff;
+  padding: 10px 20px; border-radius: 30px; font-size: 0.85rem; font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); pointer-events: none; opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 10000;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+body.theme-night-vision .toast { background: #021408; border-color: #00ff66; color: #00ff66; box-shadow: 0 0 20px rgba(0, 255, 102, 0.4); }
+
+@media (max-width: 480px) {
+  .calculator-chassis { padding: 16px; border-radius: 20px; }
+  .key { height: 48px; font-size: 1rem; border-radius: 10px; }
+  .display-input { font-size: 1.8rem; }
+}
+  </style>
+</head>
+<body class="theme-standard">
+  <div class="night-vision-overlay" aria-hidden="true"></div>
+  <div class="nv-reticle" aria-hidden="true"></div>
+
+  <main class="app-container">
+    <div class="calculator-chassis" id="calculator">
+      <!-- Calculator Header -->
+      <header class="calc-header">
+        <div class="brand-badge">
+          <div class="status-indicator"></div>
+          <div class="brand-text">
+            <span class="brand-title">HANIA'S</span>
+            <span class="brand-subtitle">SCIENTIFIC CALCULATOR</span>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <button id="nv-toggle-btn" class="control-pill nv-btn" title="Toggle Night Vision Mode" aria-label="Toggle Night Vision">
+            <span class="nv-icon">👁</span>
+            <span class="nv-text">NIGHT VISION</span>
+            <span class="nv-status-dot"></span>
+          </button>
+
+          <button id="sound-toggle-btn" class="control-pill sound-btn" title="Toggle Audio FX" aria-label="Toggle Audio">
+            <span id="sound-icon">🔊</span>
+          </button>
+
+          <button id="history-toggle-btn" class="control-pill history-btn" title="View Calculation History" aria-label="History">
+            <span>📜</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Display Screen -->
+      <section class="display-container" aria-live="polite">
+        <div class="display-status-bar">
+          <div class="status-tags">
+            <span id="angle-mode-badge" class="badge">DEG</span>
+            <span id="shift-badge" class="badge badge-inactive">2ND</span>
+            <span id="hyp-badge" class="badge badge-inactive">HYP</span>
+            <span id="memory-badge" class="badge badge-inactive">M</span>
+          </div>
+          <div class="nv-hud-tag" id="nv-hud-tag">NVG: OFF</div>
+        </div>
+
+        <div class="display-expression" id="display-expression" title="Previous calculation"></div>
+
+        <div class="display-main">
+          <input type="text" id="display-input" class="display-input" value="0" readonly autocomplete="off" spellcheck="false" aria-label="Calculator display">
+        </div>
+
+        <div class="display-preview" id="display-preview"></div>
+      </section>
+
+      <!-- Keypad Grid -->
+      <section class="keypad-container">
+        <!-- Top Function Ribbon -->
+        <div class="keypad-row ribbon-row">
+          <button class="key key-fn key-shift" data-action="toggle-shift">
+            <span class="primary-label">2nd</span>
+          </button>
+          <button class="key key-fn key-angle" data-action="toggle-angle">
+            <span class="primary-label" id="angle-btn-text">DEG</span>
+          </button>
+          <button class="key key-fn" data-action="toggle-hyp">
+            <span class="primary-label">hyp</span>
+          </button>
+          <button class="key key-memory" data-action="mem-clear">
+            <span class="primary-label">MC</span>
+          </button>
+          <button class="key key-memory" data-action="mem-recall">
+            <span class="primary-label">MR</span>
+          </button>
+          <button class="key key-memory" data-action="mem-add">
+            <span class="primary-label">M+</span>
+          </button>
+        </div>
+
+        <!-- Scientific Rows & Numpad Grid -->
+        <div class="keypad-grid">
+          <!-- Row 1 -->
+          <button class="key key-sc" data-func="sin" data-shift-func="asin">
+            <span class="primary-label">sin</span>
+            <span class="sub-label">sin⁻¹</span>
+          </button>
+          <button class="key key-sc" data-func="cos" data-shift-func="acos">
+            <span class="primary-label">cos</span>
+            <span class="sub-label">cos⁻¹</span>
+          </button>
+          <button class="key key-sc" data-func="tan" data-shift-func="atan">
+            <span class="primary-label">tan</span>
+            <span class="sub-label">tan⁻¹</span>
+          </button>
+          <button class="key key-danger" data-action="clear-all">
+            <span class="primary-label">AC</span>
+          </button>
+          <button class="key key-warning" data-action="backspace">
+            <span class="primary-label">⌫</span>
+          </button>
+
+          <!-- Row 2 -->
+          <button class="key key-sc" data-func="ln" data-shift-func="exp">
+            <span class="primary-label">ln</span>
+            <span class="sub-label">eˣ</span>
+          </button>
+          <button class="key key-sc" data-func="log" data-shift-func="pow10">
+            <span class="primary-label">log</span>
+            <span class="sub-label">10ˣ</span>
+          </button>
+          <button class="key key-sc" data-func="sqrt" data-shift-func="cbrt">
+            <span class="primary-label">√</span>
+            <span class="sub-label">∛</span>
+          </button>
+          <button class="key key-op" data-insert="(">
+            <span class="primary-label">(</span>
+          </button>
+          <button class="key key-op" data-insert=")">
+            <span class="primary-label">)</span>
+          </button>
+
+          <!-- Row 3 -->
+          <button class="key key-sc" data-func="sqr" data-shift-func="cube">
+            <span class="primary-label">x²</span>
+            <span class="sub-label">x³</span>
+          </button>
+          <button class="key key-sc" data-op="^">
+            <span class="primary-label">xʸ</span>
+            <span class="sub-label">pow</span>
+          </button>
+          <button class="key key-num" data-num="7">
+            <span class="primary-label">7</span>
+          </button>
+          <button class="key key-num" data-num="8">
+            <span class="primary-label">8</span>
+          </button>
+          <button class="key key-num" data-num="9">
+            <span class="primary-label">9</span>
+          </button>
+
+          <!-- Row 4 -->
+          <button class="key key-sc" data-func="fact">
+            <span class="primary-label">x!</span>
+          </button>
+          <button class="key key-sc" data-func="inv">
+            <span class="primary-label">1/x</span>
+          </button>
+          <button class="key key-num" data-num="4">
+            <span class="primary-label">4</span>
+          </button>
+          <button class="key key-num" data-num="5">
+            <span class="primary-label">5</span>
+          </button>
+          <button class="key key-num" data-num="6">
+            <span class="primary-label">6</span>
+          </button>
+
+          <!-- Row 5 -->
+          <button class="key key-const" data-insert="π">
+            <span class="primary-label">π</span>
+          </button>
+          <button class="key key-const" data-insert="e">
+            <span class="primary-label">e</span>
+          </button>
+          <button class="key key-num" data-num="1">
+            <span class="primary-label">1</span>
+          </button>
+          <button class="key key-num" data-num="2">
+            <span class="primary-label">2</span>
+          </button>
+          <button class="key key-num" data-num="3">
+            <span class="primary-label">3</span>
+          </button>
+
+          <!-- Row 6 -->
+          <button class="key key-op" data-op="÷">
+            <span class="primary-label">÷</span>
+          </button>
+          <button class="key key-op" data-op="×">
+            <span class="primary-label">×</span>
+          </button>
+          <button class="key key-num" data-num="0">
+            <span class="primary-label">0</span>
+          </button>
+          <button class="key key-num" data-insert=".">
+            <span class="primary-label">.</span>
+          </button>
+          <button class="key key-action" data-action="toggle-sign">
+            <span class="primary-label">±</span>
+          </button>
+
+          <!-- Row 7 -->
+          <button class="key key-op" data-op="−">
+            <span class="primary-label">−</span>
+          </button>
+          <button class="key key-op" data-op="+">
+            <span class="primary-label">+</span>
+          </button>
+          <button class="key key-op" data-op="%">
+            <span class="primary-label">%</span>
+          </button>
+          <button class="key key-equals" data-action="calculate">
+            <span class="primary-label">=</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Chassis Footer -->
+      <footer class="calc-footer">
+        <div class="footer-specs">
+          <span>HIGH PRECISION ENGINE</span> • <span>DUAL MODE NV-OPTICS</span>
+        </div>
+        <div class="footer-shortcuts">
+          <button id="copy-btn" class="mini-btn" title="Copy result to clipboard">📋 Copy</button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- History Drawer -->
+    <aside class="history-drawer" id="history-drawer">
+      <div class="history-header">
+        <h3>Calculation History</h3>
+        <button id="close-history-btn" class="close-btn" aria-label="Close history">✕</button>
+      </div>
+      <div class="history-list" id="history-list">
+        <p class="empty-history">No calculations recorded yet.</p>
+      </div>
+      <div class="history-footer">
+        <button id="clear-history-btn" class="clear-history-btn">Clear History</button>
+      </div>
+    </aside>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Result copied to clipboard</div>
+  </main>
+
+  <script>
+  (() => {
+    'use strict';
+    const state = {
+      currentInput: '0',
+      expression: '',
+      previewResult: '',
+      memory: 0,
+      angleMode: 'DEG',
+      isShift: false,
+      isHyp: false,
+      isNightVision: false,
+      soundEnabled: true,
+      history: []
+    };
+
+    const displayInput = document.getElementById('display-input');
+    const displayExpr = document.getElementById('display-expression');
+    const displayPreview = document.getElementById('display-preview');
+    const angleBadge = document.getElementById('angle-mode-badge');
+    const shiftBadge = document.getElementById('shift-badge');
+    const hypBadge = document.getElementById('hyp-badge');
+    const memoryBadge = document.getElementById('memory-badge');
+    const nvHudTag = document.getElementById('nv-hud-tag');
+    const angleBtnText = document.getElementById('angle-btn-text');
+
+    const nvToggleBtn = document.getElementById('nv-toggle-btn');
+    const soundToggleBtn = document.getElementById('sound-toggle-btn');
+    const soundIcon = document.getElementById('sound-icon');
+    const historyToggleBtn = document.getElementById('history-toggle-btn');
+    const closeHistoryBtn = document.getElementById('close-history-btn');
+    const historyDrawer = document.getElementById('history-drawer');
+    const historyList = document.getElementById('history-list');
+    const clearHistoryBtn = document.getElementById('clear-history-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const toast = document.getElementById('toast');
+
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playSound(type = 'click') {
+      if (!state.soundEnabled) return;
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(state.isNightVision ? 880 : 620, now);
+          osc.frequency.exponentialRampToValueAtTime(state.isNightVision ? 440 : 200, now + 0.04);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'equals') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.05);
+          osc.frequency.setValueAtTime(783.99, now + 0.1);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (type === 'nv-toggle') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(1400, now + 0.18);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else if (type === 'clear') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.exponentialRampToValueAtTime(120, now + 0.08);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        }
+      } catch (e) {}
+    }
+
+    function updateDisplay() {
+      displayInput.value = state.currentInput;
+      displayExpr.textContent = state.expression;
+      displayInput.scrollLeft = displayInput.scrollWidth;
+
+      angleBadge.textContent = state.angleMode;
+      angleBtnText.textContent = state.angleMode;
+
+      if (state.isShift) shiftBadge.classList.remove('badge-inactive');
+      else shiftBadge.classList.add('badge-inactive');
+
+      if (state.isHyp) hypBadge.classList.remove('badge-inactive');
+      else hypBadge.classList.add('badge-inactive');
+
+      if (state.memory !== 0) memoryBadge.classList.remove('badge-inactive');
+      else memoryBadge.classList.add('badge-inactive');
+
+      updateLivePreview();
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function factorial(n) {
+      if (n < 0) return NaN;
+      if (n === 0 || n === 1) return 1;
+      if (n > 170) return Infinity;
+      let result = 1;
+      for (let i = 2; i <= Math.floor(n); i++) result *= i;
+      return result;
+    }
+
+    function toRad(val) { return state.angleMode === 'DEG' ? (val * Math.PI) / 180 : val; }
+    function fromRad(val) { return state.angleMode === 'DEG' ? (val * 180) / Math.PI : val; }
+
+    function evaluateExpression(exprStr) {
+      if (!exprStr || exprStr.trim() === '') return 0;
+      let parsed = exprStr
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/−/g, '-')
+        .replace(/π/g, `(${Math.PI})`)
+        .replace(/\be\b/g, `(${Math.E})`)
+        .replace(/(\d+(\.\d+)?)%/g, '($1*0.01)');
+
+      parsed = handlePowers(parsed);
+      const validMathRegex = /^[0-9+\-*/().,MathPIEpowsqrtsincostanlogexpabs\s]+$/;
+      if (!validMathRegex.test(parsed)) throw new Error('Invalid Syntax');
+
+      const evaluator = new Function('Math', 'fact', `"use strict"; return (${parsed});`);
+      const result = evaluator(Math, factorial);
+
+      if (typeof result !== 'number' || isNaN(result)) throw new Error('Math Error');
+      if (!isFinite(result)) throw new Error('Division by zero');
+
+      return formatResult(result);
+    }
+
+    function handlePowers(expr) {
+      let powerIndex = expr.lastIndexOf('^');
+      while (powerIndex !== -1) {
+        let left = getLeftOperand(expr, powerIndex);
+        let right = getRightOperand(expr, powerIndex);
+        if (left && right) {
+          const replacement = `Math.pow(${left.expr},${right.expr})`;
+          expr = expr.substring(0, left.start) + replacement + expr.substring(right.end);
+          powerIndex = expr.lastIndexOf('^');
+        } else {
+          break;
+        }
+      }
+      return expr;
+    }
+
+    function getLeftOperand(expr, index) {
+      let i = index - 1;
+      while (i >= 0 && expr[i] === ' ') i--;
+      if (i < 0) return null;
+      if (expr[i] === ')') {
+        let depth = 1, end = i + 1;
+        i--;
+        while (i >= 0 && depth > 0) {
+          if (expr[i] === ')') depth++;
+          if (expr[i] === '(') depth--;
+          i--;
+        }
+        return { start: i + 1, expr: expr.substring(i + 1, end) };
+      } else {
+        let end = i + 1;
+        while (i >= 0 && /[0-9.a-zA-Z_]/.test(expr[i])) i--;
+        return { start: i + 1, expr: expr.substring(i + 1, end) };
+      }
+    }
+
+    function getRightOperand(expr, index) {
+      let i = index + 1;
+      while (i < expr.length && expr[i] === ' ') i++;
+      if (i >= expr.length) return null;
+      if (expr[i] === '(') {
+        let depth = 1, start = i;
+        i++;
+        while (i < expr.length && depth > 0) {
+          if (expr[i] === '(') depth++;
+          if (expr[i] === ')') depth--;
+          i++;
+        }
+        return { end: i, expr: expr.substring(start, i) };
+      } else {
+        let start = i;
+        if (expr[i] === '-' || expr[i] === '+') i++;
+        while (i < expr.length && /[0-9.a-zA-Z_]/.test(expr[i])) i++;
+        return { end: i, expr: expr.substring(start, i) };
+      }
+    }
+
+    function formatResult(num) {
+      if (Math.abs(num) < 1e-12 && num !== 0) return num.toExponential(8);
+      if (Math.abs(num) >= 1e14) return num.toExponential(8);
+      const rounded = Math.round(num * 1e10) / 1e10;
+      return rounded.toString();
+    }
+
+    function updateLivePreview() {
+      if (!state.expression && state.currentInput === '0') {
+        displayPreview.textContent = '';
+        return;
+      }
+      try {
+        let fullExpr = state.expression + (state.currentInput !== '0' ? state.currentInput : '');
+        if (!fullExpr || /[+\-×÷^(\[]$/.test(fullExpr.trim())) {
+          displayPreview.textContent = '';
+          return;
+        }
+        const val = evaluateExpression(fullExpr);
+        displayPreview.textContent = `= ${val}`;
+      } catch {
+        displayPreview.textContent = '';
+      }
+    }
+
+    function inputDigit(digit) {
+      playSound('click');
+      if (state.currentInput === '0' || state.currentInput === 'Error') state.currentInput = digit;
+      else state.currentInput += digit;
+      updateDisplay();
+    }
+
+    function inputDecimal() {
+      playSound('click');
+      if (state.currentInput === 'Error') state.currentInput = '0';
+      if (!state.currentInput.includes('.')) state.currentInput += '.';
+      updateDisplay();
+    }
+
+    function inputOperator(op) {
+      playSound('click');
+      if (state.currentInput === 'Error') state.currentInput = '0';
+      if (state.currentInput !== '') {
+        state.expression += ` ${state.currentInput} ${op} `;
+        state.currentInput = '0';
+      } else if (state.expression !== '') {
+        state.expression = state.expression.trim().replace(/[+\-×÷%^]$/, op) + ' ';
+      }
+      updateDisplay();
+    }
+
+    function insertToken(token) {
+      playSound('click');
+      if (state.currentInput === '0' || state.currentInput === 'Error') state.currentInput = token;
+      else state.currentInput += token;
+      updateDisplay();
+    }
+
+    function toggleSign() {
+      playSound('click');
+      if (state.currentInput === '0' || state.currentInput === 'Error') return;
+      if (state.currentInput.startsWith('-')) state.currentInput = state.currentInput.substring(1);
+      else state.currentInput = '-' + state.currentInput;
+      updateDisplay();
+    }
+
+    function backspace() {
+      playSound('click');
+      if (state.currentInput === 'Error') state.currentInput = '0';
+      else if (state.currentInput.length > 1) state.currentInput = state.currentInput.slice(0, -1);
+      else state.currentInput = '0';
+      updateDisplay();
+    }
+
+    function clearAll() {
+      playSound('clear');
+      state.currentInput = '0';
+      state.expression = '';
+      state.previewResult = '';
+      displayPreview.textContent = '';
+      updateDisplay();
+    }
+
+    function applyFunction(funcName) {
+      playSound('click');
+      let val = parseFloat(state.currentInput);
+      if (isNaN(val)) val = 0;
+      let res = 0;
+      const useShift = state.isShift;
+      const useHyp = state.isHyp;
+
+      try {
+        switch (funcName) {
+          case 'sin':
+            if (useHyp) res = useShift ? Math.asinh(val) : Math.sinh(val);
+            else if (useShift) {
+              if (val < -1 || val > 1) throw new Error('Domain Error');
+              res = fromRad(Math.asin(val));
+            } else res = Math.sin(toRad(val));
+            break;
+          case 'cos':
+            if (useHyp) res = useShift ? Math.acosh(val) : Math.cosh(val);
+            else if (useShift) {
+              if (val < -1 || val > 1) throw new Error('Domain Error');
+              res = fromRad(Math.acos(val));
+            } else res = Math.cos(toRad(val));
+            break;
+          case 'tan':
+            if (useHyp) res = useShift ? Math.atanh(val) : Math.tanh(val);
+            else if (useShift) res = fromRad(Math.atan(val));
+            else res = Math.tan(toRad(val));
+            break;
+          case 'ln':
+            if (useShift) res = Math.exp(val);
+            else {
+              if (val <= 0) throw new Error('Domain Error');
+              res = Math.log(val);
+            }
+            break;
+          case 'log':
+            if (useShift) res = Math.pow(10, val);
+            else {
+              if (val <= 0) throw new Error('Domain Error');
+              res = Math.log10(val);
+            }
+            break;
+          case 'sqrt':
+            if (useShift) res = Math.cbrt(val);
+            else {
+              if (val < 0) throw new Error('Domain Error');
+              res = Math.sqrt(val);
+            }
+            break;
+          case 'sqr':
+            res = useShift ? Math.pow(val, 3) : Math.pow(val, 2);
+            break;
+          case 'fact':
+            if (val < 0) throw new Error('Domain Error');
+            res = factorial(val);
+            break;
+          case 'inv':
+            if (val === 0) throw new Error('Cannot divide by zero');
+            res = 1 / val;
+            break;
+          default: return;
+        }
+
+        state.currentInput = formatResult(res);
+        if (state.isShift) {
+          state.isShift = false;
+          updateShiftKeyLabels();
+        }
+      } catch (err) {
+        state.currentInput = err.message || 'Error';
+      }
+      updateDisplay();
+    }
+
+    function calculate() {
+      playSound('equals');
+      try {
+        const fullExpr = state.expression + state.currentInput;
+        if (!fullExpr || fullExpr.trim() === '') return;
+        const result = evaluateExpression(fullExpr);
+        addHistoryItem(fullExpr, result);
+        state.expression = `${fullExpr} =`;
+        state.currentInput = result.toString();
+        displayPreview.textContent = '';
+      } catch (err) {
+        state.currentInput = err.message || 'Error';
+      }
+      updateDisplay();
+    }
+
+    function memClear() {
+      playSound('click');
+      state.memory = 0;
+      showToast('Memory Cleared (0)');
+      updateDisplay();
+    }
+    function memRecall() {
+      playSound('click');
+      state.currentInput = formatResult(state.memory);
+      showToast(`Memory Recalled (${state.memory})`);
+      updateDisplay();
+    }
+    function memAdd() {
+      playSound('click');
+      state.memory += parseFloat(state.currentInput) || 0;
+      showToast(`Memory: ${formatResult(state.memory)}`);
+      updateDisplay();
+    }
+
+    function toggleAngleMode() {
+      playSound('click');
+      state.angleMode = state.angleMode === 'DEG' ? 'RAD' : 'DEG';
+      showToast(`Angle Mode: ${state.angleMode}`);
+      updateDisplay();
+    }
+
+    function toggleShift() {
+      playSound('click');
+      state.isShift = !state.isShift;
+      updateShiftKeyLabels();
+      updateDisplay();
+    }
+
+    function toggleHyp() {
+      playSound('click');
+      state.isHyp = !state.isHyp;
+      showToast(`Hyperbolic: ${state.isHyp ? 'ON' : 'OFF'}`);
+      updateDisplay();
+    }
+
+    function updateShiftKeyLabels() {
+      const shiftKeys = document.querySelectorAll('[data-shift-func]');
+      shiftKeys.forEach(btn => {
+        if (state.isShift) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+      const shiftBtn = document.querySelector('.key-shift');
+      if (shiftBtn) {
+        if (state.isShift) shiftBtn.classList.add('active');
+        else shiftBtn.classList.remove('active');
+      }
+    }
+
+    function toggleNightVision() {
+      state.isNightVision = !state.isNightVision;
+      playSound('nv-toggle');
+      if (state.isNightVision) {
+        document.body.classList.remove('theme-standard');
+        document.body.classList.add('theme-night-vision');
+        nvHudTag.textContent = 'NVG: ACTIVE [NV-G9]';
+        showToast('Night Vision Activated 🌙');
+      } else {
+        document.body.classList.remove('theme-night-vision');
+        document.body.classList.add('theme-standard');
+        nvHudTag.textContent = 'NVG: OFF';
+        showToast('Standard High-Contrast Mode ☀️');
+      }
+      try { localStorage.setItem('hania_calc_nv', state.isNightVision ? '1' : '0'); } catch(e){}
+    }
+
+    function toggleSound() {
+      state.soundEnabled = !state.soundEnabled;
+      soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';
+      showToast(`Sound FX ${state.soundEnabled ? 'Enabled' : 'Muted'}`);
+    }
+
+    function addHistoryItem(expr, res) {
+      const item = { expr, res };
+      state.history.unshift(item);
+      if (state.history.length > 30) state.history.pop();
+      renderHistory();
+      try { localStorage.setItem('hania_calc_history', JSON.stringify(state.history)); } catch(e){}
+    }
+
+    function renderHistory() {
+      if (!historyList) return;
+      if (state.history.length === 0) {
+        historyList.innerHTML = '<p class="empty-history">No calculations recorded yet.</p>';
+        return;
+      }
+      historyList.innerHTML = state.history.map((item, idx) => `
+        <div class="history-item" data-index="${idx}" title="Click to insert result">
+          <div class="history-expr">${escapeHtml(item.expr)} =</div>
+          <div class="history-result">${escapeHtml(item.res.toString())}</div>
+        </div>
+      `).join('');
+
+      historyList.querySelectorAll('.history-item').forEach(el => {
+        el.addEventListener('click', () => {
+          playSound('click');
+          const idx = el.getAttribute('data-index');
+          const hist = state.history[idx];
+          if (hist) {
+            state.currentInput = hist.res.toString();
+            state.expression = '';
+            updateDisplay();
+            showToast(`Loaded: ${hist.res}`);
+          }
+        });
+      });
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[m]);
+    }
+
+    function clearHistory() {
+      playSound('clear');
+      state.history = [];
+      try { localStorage.removeItem('hania_calc_history'); } catch(e){}
+      renderHistory();
+      showToast('History Cleared');
+    }
+
+    function copyResult() {
+      playSound('click');
+      const textToCopy = state.currentInput;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          showToast(`Copied "${textToCopy}" to clipboard!`);
+        }).catch(() => fallbackCopy(textToCopy));
+      } else {
+        fallbackCopy(textToCopy);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast(`Copied "${text}" to clipboard!`);
+    }
+
+    function setupEventListeners() {
+      document.querySelector('.keypad-container').addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const num = btn.dataset.num;
+        const op = btn.dataset.op;
+        const insert = btn.dataset.insert;
+        const action = btn.dataset.action;
+        const func = btn.dataset.func;
+
+        if (num !== undefined) inputDigit(num);
+        else if (op !== undefined) inputOperator(op);
+        else if (insert !== undefined) {
+          if (insert === '.') inputDecimal();
+          else insertToken(insert);
+        } else if (func !== undefined) applyFunction(func);
+        else if (action !== undefined) {
+          switch (action) {
+            case 'calculate': calculate(); break;
+            case 'clear-all': clearAll(); break;
+            case 'backspace': backspace(); break;
+            case 'toggle-sign': toggleSign(); break;
+            case 'toggle-shift': toggleShift(); break;
+            case 'toggle-angle': toggleAngleMode(); break;
+            case 'toggle-hyp': toggleHyp(); break;
+            case 'mem-clear': memClear(); break;
+            case 'mem-recall': memRecall(); break;
+            case 'mem-add': memAdd(); break;
+          }
+        }
+      });
+
+      nvToggleBtn.addEventListener('click', toggleNightVision);
+      soundToggleBtn.addEventListener('click', toggleSound);
+      historyToggleBtn.addEventListener('click', () => {
+        playSound('click');
+        historyDrawer.classList.toggle('active');
+      });
+      closeHistoryBtn.addEventListener('click', () => {
+        playSound('click');
+        historyDrawer.classList.remove('active');
+      });
+      clearHistoryBtn.addEventListener('click', clearHistory);
+      copyBtn.addEventListener('click', copyResult);
+
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' && e.target.id !== 'display-input') return;
+        const key = e.key;
+        if (/[0-9]/.test(key)) { e.preventDefault(); inputDigit(key); }
+        else if (key === '.') { e.preventDefault(); inputDecimal(); }
+        else if (key === '+' || key === '-') { e.preventDefault(); inputOperator(key === '-' ? '−' : '+'); }
+        else if (key === '*') { e.preventDefault(); inputOperator('×'); }
+        else if (key === '/') { e.preventDefault(); inputOperator('÷'); }
+        else if (key === '^') { e.preventDefault(); inputOperator('^'); }
+        else if (key === '%' || key === '(' || key === ')') { e.preventDefault(); insertToken(key); }
+        else if (key === 'Enter' || key === '=') { e.preventDefault(); calculate(); }
+        else if (key === 'Backspace') { e.preventDefault(); backspace(); }
+        else if (key === 'Escape') { e.preventDefault(); clearAll(); }
+      });
+    }
+
+    function init() {
+      try {
+        const savedNV = localStorage.getItem('hania_calc_nv');
+        if (savedNV === '1') {
+          state.isNightVision = true;
+          document.body.classList.remove('theme-standard');
+          document.body.classList.add('theme-night-vision');
+          nvHudTag.textContent = 'NVG: ACTIVE [NV-G9]';
+        }
+        const savedHist = localStorage.getItem('hania_calc_history');
+        if (savedHist) state.history = JSON.parse(savedHist);
+      } catch(e) {}
+      renderHistory();
+      setupEventListeners();
+      updateDisplay();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+</body>
+</html>

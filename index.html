@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hania's Scientific Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-standard">
+  <!-- Scanline & HUD overlay for Night Vision mode -->
+  <div class="night-vision-overlay" aria-hidden="true"></div>
+  <div class="nv-reticle" aria-hidden="true"></div>
+
+  <main class="app-container">
+    <div class="calculator-chassis" id="calculator">
+      <!-- Calculator Header / Brand Plate -->
+      <header class="calc-header">
+        <div class="brand-badge">
+          <div class="status-indicator"></div>
+          <div class="brand-text">
+            <span class="brand-title">HANIA'S</span>
+            <span class="brand-subtitle">SCIENTIFIC CALCULATOR</span>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <!-- Night Vision Toggle Button -->
+          <button id="nv-toggle-btn" class="control-pill nv-btn" title="Toggle Night Vision Mode" aria-label="Toggle Night Vision">
+            <span class="nv-icon">👁</span>
+            <span class="nv-text">NIGHT VISION</span>
+            <span class="nv-status-dot"></span>
+          </button>
+
+          <!-- Sound Effects Toggle -->
+          <button id="sound-toggle-btn" class="control-pill sound-btn" title="Toggle Audio FX" aria-label="Toggle Audio">
+            <span id="sound-icon">🔊</span>
+          </button>
+
+          <!-- History Drawer Toggle -->
+          <button id="history-toggle-btn" class="control-pill history-btn" title="View Calculation History" aria-label="History">
+            <span>📜</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Calculator Screen / Display Section -->
+      <section class="display-container" aria-live="polite">
+        <!-- Status Bar inside Display -->
+        <div class="display-status-bar">
+          <div class="status-tags">
+            <span id="angle-mode-badge" class="badge">DEG</span>
+            <span id="shift-badge" class="badge badge-inactive">2ND</span>
+            <span id="hyp-badge" class="badge badge-inactive">HYP</span>
+            <span id="memory-badge" class="badge badge-inactive">M</span>
+          </div>
+          <div class="nv-hud-tag" id="nv-hud-tag">NVG: OFF</div>
+        </div>
+
+        <!-- Upper Expression Line -->
+        <div class="display-expression" id="display-expression" title="Previous calculation"></div>
+
+        <!-- Main Numeric / Input Display -->
+        <div class="display-main">
+          <input type="text" id="display-input" class="display-input" value="0" readonly autocomplete="off" spellcheck="false" aria-label="Calculator display">
+        </div>
+
+        <!-- Live Preview Line -->
+        <div class="display-preview" id="display-preview"></div>
+      </section>
+
+      <!-- Keypad Grid -->
+      <section class="keypad-container">
+        <!-- Top Function Ribbon (Shift, Angle, Memory, Clear) -->
+        <div class="keypad-row ribbon-row">
+          <button class="key key-fn key-shift" data-action="toggle-shift">
+            <span class="primary-label">2nd</span>
+          </button>
+          <button class="key key-fn key-angle" data-action="toggle-angle">
+            <span class="primary-label" id="angle-btn-text">DEG</span>
+          </button>
+          <button class="key key-fn" data-action="toggle-hyp">
+            <span class="primary-label">hyp</span>
+          </button>
+          <button class="key key-memory" data-action="mem-clear">
+            <span class="primary-label">MC</span>
+          </button>
+          <button class="key key-memory" data-action="mem-recall">
+            <span class="primary-label">MR</span>
+          </button>
+          <button class="key key-memory" data-action="mem-add">
+            <span class="primary-label">M+</span>
+          </button>
+        </div>
+
+        <!-- Scientific Rows & Numpad Grid -->
+        <div class="keypad-grid">
+          <!-- Row 1 -->
+          <button class="key key-sc" data-func="sin" data-shift-func="asin">
+            <span class="primary-label">sin</span>
+            <span class="sub-label">sin⁻¹</span>
+          </button>
+          <button class="key key-sc" data-func="cos" data-shift-func="acos">
+            <span class="primary-label">cos</span>
+            <span class="sub-label">cos⁻¹</span>
+          </button>
+          <button class="key key-sc" data-func="tan" data-shift-func="atan">
+            <span class="primary-label">tan</span>
+            <span class="sub-label">tan⁻¹</span>
+          </button>
+          <button class="key key-danger" data-action="clear-all">
+            <span class="primary-label">AC</span>
+          </button>
+          <button class="key key-warning" data-action="backspace">
+            <span class="primary-label">⌫</span>
+          </button>
+
+          <!-- Row 2 -->
+          <button class="key key-sc" data-func="ln" data-shift-func="exp">
+            <span class="primary-label">ln</span>
+            <span class="sub-label">eˣ</span>
+          </button>
+          <button class="key key-sc" data-func="log" data-shift-func="pow10">
+            <span class="primary-label">log</span>
+            <span class="sub-label">10ˣ</span>
+          </button>
+          <button class="key key-sc" data-func="sqrt" data-shift-func="cbrt">
+            <span class="primary-label">√</span>
+            <span class="sub-label">∛</span>
+          </button>
+          <button class="key key-op" data-insert="(">
+            <span class="primary-label">(</span>
+          </button>
+          <button class="key key-op" data-insert=")">
+            <span class="primary-label">)</span>
+          </button>
+
+          <!-- Row 3 -->
+          <button class="key key-sc" data-func="sqr" data-shift-func="cube">
+            <span class="primary-label">x²</span>
+            <span class="sub-label">x³</span>
+          </button>
+          <button class="key key-sc" data-op="^" data-shift-op="rootY">
+            <span class="primary-label">xʸ</span>
+            <span class="sub-label">ʸ√x</span>
+          </button>
+          <button class="key key-num" data-num="7">
+            <span class="primary-label">7</span>
+          </button>
+          <button class="key key-num" data-num="8">
+            <span class="primary-label">8</span>
+          </button>
+          <button class="key key-num" data-num="9">
+            <span class="primary-label">9</span>
+          </button>
+
+          <!-- Row 4 -->
+          <button class="key key-sc" data-func="fact">
+            <span class="primary-label">x!</span>
+          </button>
+          <button class="key key-sc" data-func="inv">
+            <span class="primary-label">1/x</span>
+          </button>
+          <button class="key key-num" data-num="4">
+            <span class="primary-label">4</span>
+          </button>
+          <button class="key key-num" data-num="5">
+            <span class="primary-label">5</span>
+          </button>
+          <button class="key key-num" data-num="6">
+            <span class="primary-label">6</span>
+          </button>
+
+          <!-- Row 5 -->
+          <button class="key key-const" data-insert="π">
+            <span class="primary-label">π</span>
+          </button>
+          <button class="key key-const" data-insert="e">
+            <span class="primary-label">e</span>
+          </button>
+          <button class="key key-num" data-num="1">
+            <span class="primary-label">1</span>
+          </button>
+          <button class="key key-num" data-num="2">
+            <span class="primary-label">2</span>
+          </button>
+          <button class="key key-num" data-num="3">
+            <span class="primary-label">3</span>
+          </button>
+
+          <!-- Row 6: Basic Operators & zero -->
+          <button class="key key-op" data-op="÷">
+            <span class="primary-label">÷</span>
+          </button>
+          <button class="key key-op" data-op="×">
+            <span class="primary-label">×</span>
+          </button>
+          <button class="key key-num" data-num="0">
+            <span class="primary-label">0</span>
+          </button>
+          <button class="key key-num" data-insert=".">
+            <span class="primary-label">.</span>
+          </button>
+          <button class="key key-action" data-action="toggle-sign">
+            <span class="primary-label">±</span>
+          </button>
+
+          <!-- Row 7: Bottom operators & Equals -->
+          <button class="key key-op" data-op="−">
+            <span class="primary-label">−</span>
+          </button>
+          <button class="key key-op" data-op="+">
+            <span class="primary-label">+</span>
+          </button>
+          <button class="key key-op" data-op="%">
+            <span class="primary-label">%</span>
+          </button>
+          <button class="key key-equals" data-action="calculate">
+            <span class="primary-label">=</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Chassis Footer -->
+      <footer class="calc-footer">
+        <div class="footer-specs">
+          <span>HIGH PRECISION ENGINE</span> • <span>DUAL MODE NV-OPTICS</span>
+        </div>
+        <div class="footer-shortcuts">
+          <button id="copy-btn" class="mini-btn" title="Copy result to clipboard">📋 Copy</button>
+        </div>
+      </footer>
+    </div>
+
+    <!-- History Drawer Sidebar / Flyout -->
+    <aside class="history-drawer" id="history-drawer">
+      <div class="history-header">
+        <h3>Calculation History</h3>
+        <button id="close-history-btn" class="close-btn" aria-label="Close history">✕</button>
+      </div>
+      <div class="history-list" id="history-list">
+        <p class="empty-history">No calculations recorded yet.</p>
+      </div>
+      <div class="history-footer">
+        <button id="clear-history-btn" class="clear-history-btn">Clear History</button>
+      </div>
+    </aside>
+
+    <!-- Toast Notification for clipboard copy and alerts -->
+    <div id="toast" class="toast">Result copied to clipboard</div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

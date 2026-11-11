@@ -1,0 +1,953 @@
+/* ==========================================================================
+   Hania's Scientific Calculator - Stylesheet
+   Theme: Obsidian Black Chassis with Blue Keys & White Canvas + Tactical Night Vision
+   ========================================================================== */
+
+:root {
+  /* Default Palette (Standard Mode) */
+  --page-bg: #f3f5f9;
+  --page-radial: radial-gradient(circle at 50% 30%, #ffffff 0%, #e8edf5 100%);
+  --grid-line-color: rgba(0, 0, 0, 0.04);
+
+  /* Calculator Chassis (Obsidian Black) */
+  --calc-body-bg: linear-gradient(165deg, #18191f 0%, #101115 50%, #0a0b0d 100%);
+  --calc-border: #282a36;
+  --calc-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4), 0 10px 25px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --calc-accent: #0284c7;
+
+  /* Display Screen (Clean White LCD) */
+  --display-bg: #ffffff;
+  --display-border: #d1d5db;
+  --display-text-main: #0f172a;
+  --display-text-muted: #64748b;
+  --display-text-preview: #0284c7;
+  --display-inner-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  /* Blue Button System */
+  --btn-num-bg: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+  --btn-num-border: #3b82f6;
+  --btn-num-shadow: 0 4px 10px rgba(30, 64, 175, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  --btn-num-hover: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+
+  --btn-sc-bg: linear-gradient(180deg, #0369a1 0%, #075985 100%);
+  --btn-sc-border: #0284c7;
+  --btn-sc-shadow: 0 4px 10px rgba(3, 105, 161, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  --btn-sc-hover: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
+
+  --btn-op-bg: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  --btn-op-border: #60a5fa;
+  --btn-op-shadow: 0 4px 12px rgba(37, 99, 235, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  --btn-op-hover: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+
+  --btn-eq-bg: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #1d4ed8 100%);
+  --btn-eq-border: #38bdf8;
+  --btn-eq-shadow: 0 6px 18px rgba(37, 99, 235, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  --btn-eq-hover: linear-gradient(135deg, #38bdf8 0%, #0284c7 50%, #2563eb 100%);
+
+  --btn-memory-bg: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  --btn-memory-border: #334155;
+  --btn-memory-text: #93c5fd;
+
+  --btn-danger-bg: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+  --btn-danger-border: #f87171;
+  --btn-danger-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+
+  --btn-warning-bg: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  --btn-warning-border: #fbbf24;
+  --btn-warning-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
+
+  --text-primary: #ffffff;
+  --text-sub: rgba(255, 255, 255, 0.7);
+  --badge-bg: #e2e8f0;
+  --badge-text: #0f172a;
+  --badge-active-bg: #0284c7;
+  --badge-active-text: #ffffff;
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-brand: 'Orbitron', monospace;
+
+  --transition-speed: 0.25s;
+}
+
+/* ==========================================================================
+   Night Vision Mode Theme Overrides
+   Phosphor Green Tactical NVG Aesthetic
+   ========================================================================== */
+body.theme-night-vision {
+  --page-bg: #030805;
+  --page-radial: radial-gradient(circle at 50% 40%, #06190e 0%, #020704 100%);
+  --grid-line-color: rgba(0, 255, 102, 0.05);
+
+  /* Chassis glows with tactical luminescent trim */
+  --calc-body-bg: linear-gradient(165deg, #0a130e 0%, #050a07 60%, #020503 100%);
+  --calc-border: #00ff66;
+  --calc-shadow: 0 0 50px rgba(0, 255, 102, 0.22), 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 255, 102, 0.15);
+  --calc-accent: #00ff66;
+
+  /* Phosphor Night Vision Display */
+  --display-bg: #021408;
+  --display-border: #00ff66;
+  --display-text-main: #00ff66;
+  --display-text-muted: #10b981;
+  --display-text-preview: #34d399;
+  --display-inner-shadow: inset 0 0 20px rgba(0, 255, 102, 0.25), 0 0 10px rgba(0, 255, 102, 0.3);
+
+  /* Blue keys get electric bioluminescent / night optics blue-cyan tint */
+  --btn-num-bg: linear-gradient(180deg, #062b3a 0%, #031c26 100%);
+  --btn-num-border: #00e5ff;
+  --btn-num-shadow: 0 0 12px rgba(0, 229, 255, 0.35), inset 0 1px 1px rgba(0, 229, 255, 0.4);
+  --btn-num-hover: linear-gradient(180deg, #08435b 0%, #062b3a 100%);
+
+  --btn-sc-bg: linear-gradient(180deg, #063428 0%, #032018 100%);
+  --btn-sc-border: #00ff88;
+  --btn-sc-shadow: 0 0 12px rgba(0, 255, 136, 0.35), inset 0 1px 1px rgba(0, 255, 136, 0.4);
+  --btn-sc-hover: linear-gradient(180deg, #0b4f3e 0%, #063428 100%);
+
+  --btn-op-bg: linear-gradient(180deg, #044b70 0%, #03324d 100%);
+  --btn-op-border: #38bdf8;
+  --btn-op-shadow: 0 0 15px rgba(56, 189, 248, 0.45), inset 0 1px 1px rgba(56, 189, 248, 0.5);
+  --btn-op-hover: linear-gradient(180deg, #066699 0%, #044b70 100%);
+
+  --btn-eq-bg: linear-gradient(135deg, #00ff66 0%, #00b4d8 100%);
+  --btn-eq-border: #00ff66;
+  --btn-eq-shadow: 0 0 25px rgba(0, 255, 102, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  --btn-eq-hover: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+
+  --btn-memory-bg: linear-gradient(180deg, #051a11 0%, #030e09 100%);
+  --btn-memory-border: #059669;
+  --btn-memory-text: #6ee7b7;
+
+  --btn-danger-bg: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
+  --btn-danger-border: #ef4444;
+  --btn-danger-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+
+  --btn-warning-bg: linear-gradient(180deg, #78350f 0%, #451a03 100%);
+  --btn-warning-border: #f59e0b;
+  --btn-warning-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+
+  --text-primary: #e0f2fe;
+  --text-sub: #7dd3fc;
+  --badge-bg: #032512;
+  --badge-text: #00ff66;
+  --badge-active-bg: #00ff66;
+  --badge-active-text: #021408;
+}
+
+/* ==========================================================================
+   Reset & Global Base
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--page-bg);
+  background-image: var(--page-radial);
+  font-family: var(--font-sans);
+  color: #1e293b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color var(--transition-speed) ease, background-image var(--transition-speed) ease;
+}
+
+/* Background Grid Pattern */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==========================================================================
+   Night Vision Special Visual Effects (Scanlines & HUD Reticles)
+   ========================================================================== */
+.night-vision-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: 
+    radial-gradient(circle at center, transparent 40%, rgba(0, 20, 6, 0.7) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 3px);
+}
+
+body.theme-night-vision .night-vision-overlay {
+  opacity: 1;
+}
+
+/* Tactical Corner Reticles */
+.nv-reticle {
+  position: fixed;
+  inset: 12px;
+  border: 1px dashed rgba(0, 255, 102, 0.2);
+  pointer-events: none;
+  z-index: 998;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+body.theme-night-vision .nv-reticle {
+  opacity: 1;
+}
+
+.nv-reticle::before,
+.nv-reticle::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: #00ff66;
+  border-style: solid;
+}
+.nv-reticle::before {
+  top: 0; left: 0;
+  border-width: 2px 0 0 2px;
+}
+.nv-reticle::after {
+  bottom: 0; right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+/* ==========================================================================
+   Application Layout
+   ========================================================================== */
+.app-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Calculator Chassis (The Black Body)
+   ========================================================================== */
+.calculator-chassis {
+  background: var(--calc-body-bg);
+  border: 2px solid var(--calc-border);
+  box-shadow: var(--calc-shadow);
+  border-radius: 28px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  transition: all var(--transition-speed) ease;
+  user-select: none;
+}
+
+/* Decorative hardware screw accents in chassis corners */
+.calculator-chassis::before,
+.calculator-chassis::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2a2c35;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.15);
+}
+.calculator-chassis::before {
+  top: 14px;
+  left: 14px;
+}
+.calculator-chassis::after {
+  top: 14px;
+  right: 14px;
+}
+
+/* ==========================================================================
+   Header & Brand Plate
+   ========================================================================== */
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--calc-accent);
+  box-shadow: 0 0 10px var(--calc-accent);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  animation: pulse 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-brand);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+body.theme-night-vision .brand-title {
+  color: #00ff66;
+  text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+}
+
+.brand-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+body.theme-night-vision .brand-subtitle {
+  color: #34d399;
+}
+
+/* Header Action Controls */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.control-pill:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.control-pill:active {
+  transform: translateY(0);
+}
+
+/* Night Vision Button Highlights */
+.nv-btn {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(37, 99, 235, 0.3));
+  border-color: #0284c7;
+  color: #e0f2fe;
+}
+
+.nv-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #64748b;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+body.theme-night-vision .nv-btn {
+  background: linear-gradient(135deg, rgba(0, 255, 102, 0.2), rgba(16, 185, 129, 0.3));
+  border-color: #00ff66;
+  color: #00ff66;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.35);
+}
+
+body.theme-night-vision .nv-status-dot {
+  background: #00ff66;
+  box-shadow: 0 0 6px #00ff66;
+}
+
+.sound-btn, .history-btn {
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
+   Display Section (Screen)
+   ========================================================================== */
+.display-container {
+  background: var(--display-bg);
+  border: 2px solid var(--display-border);
+  box-shadow: var(--display-inner-shadow);
+  border-radius: 18px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  min-height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-speed) ease;
+}
+
+/* Screen Glass Bevel Reflection */
+.display-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+body.theme-night-vision .display-container::before {
+  background: linear-gradient(180deg, rgba(0, 255, 102, 0.08) 0%, transparent 100%);
+}
+
+.display-status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.status-tags {
+  display: flex;
+  gap: 6px;
+}
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--badge-active-bg);
+  color: var(--badge-active-text);
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.badge-inactive {
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  opacity: 0.45;
+}
+
+.nv-hud-tag {
+  font-family: var(--font-brand);
+  font-size: 0.65rem;
+  color: var(--display-text-muted);
+}
+
+body.theme-night-vision .nv-hud-tag {
+  color: #00ff66;
+  text-shadow: 0 0 6px #00ff66;
+}
+
+/* Upper Expression */
+.display-expression {
+  min-height: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--display-text-muted);
+  text-align: right;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  margin-top: 4px;
+}
+.display-expression::-webkit-scrollbar {
+  display: none;
+}
+
+/* Main Digits */
+.display-main {
+  width: 100%;
+  margin: 4px 0;
+}
+
+.display-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 2.15rem;
+  font-weight: 700;
+  color: var(--display-text-main);
+  text-align: right;
+  letter-spacing: -0.5px;
+  cursor: default;
+  transition: color var(--transition-speed) ease;
+}
+
+body.theme-night-vision .display-input {
+  text-shadow: 0 0 10px rgba(0, 255, 102, 0.65);
+}
+
+/* Live Evaluation Preview */
+.display-preview {
+  min-height: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--display-text-preview);
+  text-align: right;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Keypad System (The Blue Buttons)
+   ========================================================================== */
+.keypad-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Ribbon Row for Function toggles */
+.ribbon-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+/* Primary Scientific & Number Grid */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+/* Base Key Styling */
+.key {
+  position: relative;
+  height: 52px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: all 0.12s ease;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.key:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.key:active {
+  transform: translateY(1px) scale(0.98);
+  filter: brightness(0.95);
+}
+
+/* Secondary Shift Label */
+.sub-label {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--text-sub);
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+/* Blue Number Keys */
+.key-num {
+  background: var(--btn-num-bg);
+  border-color: var(--btn-num-border);
+  box-shadow: var(--btn-num-shadow);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.key-num:hover {
+  background: var(--btn-num-hover);
+}
+
+/* Scientific Blue Keys */
+.key-sc {
+  background: var(--btn-sc-bg);
+  border-color: var(--btn-sc-border);
+  box-shadow: var(--btn-sc-shadow);
+  font-size: 0.95rem;
+}
+.key-sc:hover {
+  background: var(--btn-sc-hover);
+}
+
+/* Operator Keys */
+.key-op {
+  background: var(--btn-op-bg);
+  border-color: var(--btn-op-border);
+  box-shadow: var(--btn-op-shadow);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.key-op:hover {
+  background: var(--btn-op-hover);
+}
+
+/* Equals Button (Highlighted Hero) */
+.key-equals {
+  grid-column: span 2;
+  background: var(--btn-eq-bg);
+  border-color: var(--btn-eq-border);
+  box-shadow: var(--btn-eq-shadow);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.key-equals:hover {
+  background: var(--btn-eq-hover);
+}
+
+/* Function & Memory Keys */
+.key-fn, .key-memory {
+  height: 42px;
+  background: var(--btn-memory-bg);
+  border-color: var(--btn-memory-border);
+  color: var(--btn-memory-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.key-fn.active {
+  background: var(--calc-accent);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+body.theme-night-vision .key-fn.active {
+  background: #00ff66;
+  color: #021408;
+  border-color: #00ff66;
+  box-shadow: 0 0 10px #00ff66;
+}
+
+/* Danger (AC) & Warning (Backspace) */
+.key-danger {
+  background: var(--btn-danger-bg);
+  border-color: var(--btn-danger-border);
+  box-shadow: var(--btn-danger-shadow);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.key-warning {
+  background: var(--btn-warning-bg);
+  border-color: var(--btn-warning-border);
+  box-shadow: var(--btn-warning-shadow);
+  font-size: 1.1rem;
+}
+
+.key-const, .key-action {
+  background: var(--btn-sc-bg);
+  border-color: var(--btn-sc-border);
+  box-shadow: var(--btn-sc-shadow);
+  font-size: 1.05rem;
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   Chassis Footer
+   ========================================================================== */
+.calc-footer {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  font-family: var(--font-brand);
+  letter-spacing: 1px;
+  color: #64748b;
+}
+
+body.theme-night-vision .calc-footer {
+  color: #059669;
+}
+
+.mini-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mini-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+body.theme-night-vision .mini-btn {
+  border-color: #00ff66;
+  color: #00ff66;
+}
+
+/* ==========================================================================
+   History Drawer Flyout
+   ========================================================================== */
+.history-drawer {
+  width: 320px;
+  background: #111217;
+  border: 1px solid #282a36;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  max-height: 640px;
+  height: 640px;
+  transition: all var(--transition-speed) ease;
+}
+
+@media (max-width: 860px) {
+  .history-drawer {
+    display: none;
+    position: fixed;
+    right: 16px;
+    top: 16px;
+    bottom: 16px;
+    z-index: 1000;
+    width: min(340px, calc(100vw - 32px));
+    height: auto;
+  }
+
+  .history-drawer.active {
+    display: flex;
+  }
+}
+
+body.theme-night-vision .history-drawer {
+  background: #040c07;
+  border-color: #00ff66;
+  box-shadow: 0 0 30px rgba(0, 255, 102, 0.2);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.history-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+body.theme-night-vision .history-header h3 {
+  color: #00ff66;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.close-btn:hover {
+  color: #ffffff;
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: right;
+}
+
+.history-item:hover {
+  background: rgba(2, 132, 199, 0.15);
+  border-color: #0284c7;
+  transform: translateX(-2px);
+}
+
+body.theme-night-vision .history-item {
+  background: rgba(0, 255, 102, 0.05);
+  border-color: rgba(0, 255, 102, 0.2);
+}
+
+body.theme-night-vision .history-item:hover {
+  background: rgba(0, 255, 102, 0.15);
+  border-color: #00ff66;
+}
+
+.history-expr {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 2px;
+  word-break: break-all;
+}
+
+.history-result {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+body.theme-night-vision .history-result {
+  color: #00ff66;
+}
+
+.empty-history {
+  color: #64748b;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 40px;
+  font-style: italic;
+}
+
+.history-footer {
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.clear-history-btn {
+  width: 100%;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  color: #fca5a5;
+  border-radius: 10px;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-history-btn:hover {
+  background: rgba(220, 38, 38, 0.3);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #0f172a;
+  border: 1px solid #38bdf8;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+body.theme-night-vision .toast {
+  background: #021408;
+  border-color: #00ff66;
+  color: #00ff66;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 480px) {
+  .calculator-chassis {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .key {
+    height: 48px;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
+  .display-input {
+    font-size: 1.8rem;
+  }
+}
